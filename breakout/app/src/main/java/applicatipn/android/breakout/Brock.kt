@@ -3,11 +3,11 @@ package applicatipn.android.breakout
 /**
  * Created by Youta on 2016/02/21.
  */
-class  Brock{
-    var left:Float=0f;
-    var top:Float=0f;
-    var right:Float=0f;
-    var bottom:Float=0f;
-    var flag:Boolean=true;
+class  Brock {
+    var left=0f;
+    var top=0f;
+    var right=0f;
+    var bottom=0f;
+    var flag=true;
 }
 

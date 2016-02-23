@@ -19,7 +19,6 @@ class Surface : SurfaceView, SurfaceHolder.Callback,Runnable {
     var game:Game?=null;
     var w:Float=0f;
     var h:Float=0f;
-    var touchX:Float=0f;
     constructor(context: Context) : super(context) {
         holder.addCallback(this);
     }
@@ -28,9 +27,7 @@ class Surface : SurfaceView, SurfaceHolder.Callback,Runnable {
         w= width.toFloat();
         h=height.toFloat();
         game= Game(w,h);
-        game!!.set_brock();
-        touchX=w/2;
-        println("w:$width h:$height");
+        //game?.set_brock()
     }
     override fun surfaceCreated(holder: SurfaceHolder) {
         thread= Thread(this);
@@ -42,7 +39,7 @@ class Surface : SurfaceView, SurfaceHolder.Callback,Runnable {
     }
     override fun onTouchEvent(e:MotionEvent):Boolean{
         if(e.action==MotionEvent.ACTION_MOVE) {
-            touchX = e.x;
+            game?.touchX = e.x;
         }
         return  true;
     }
@@ -50,20 +47,7 @@ class Surface : SurfaceView, SurfaceHolder.Callback,Runnable {
     override  fun run(){
        while(flag){
            var canvas:Canvas=holder.lockCanvas();
-           val paint: Paint = Paint();
-           canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
-           paint.color = Color.WHITE;
-           game!!.ball.move();
-           game!!.bar.move(touchX);
-           game!!.collision_bar();
-           game!!.collision_brock();
-           for(i in game!!.list){
-               if(i.flag) {
-                   canvas.drawRect(i.left,i.top, i.right,i.bottom, paint);
-               }
-           }
-           canvas.drawRect(game!!.bar.left,game!!.bar.top,game!!.bar.right,game!!.bar.bottom,paint);
-           canvas.drawCircle(game!!.ball.x,game!!.ball.y,game!!.ball.size,paint);
+           game?.play(canvas);
            holder.unlockCanvasAndPost(canvas);
        }
     }
