@@ -2,9 +2,6 @@ package applicatipn.android.breakout
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.PorterDuff
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
@@ -14,11 +11,11 @@ import android.view.SurfaceView
  * Created by Youta on 2016/02/19.
  */
 class Surface : SurfaceView, SurfaceHolder.Callback,Runnable {
-    var thread:Thread?=null;
-    var flag:Boolean=true;
+    val thread=Thread(this);
+    var flag=true;
     var game:Game?=null;
-    var w:Float=0f;
-    var h:Float=0f;
+    var w=0f;
+    var h=0f;
     constructor(context: Context) : super(context) {
         holder.addCallback(this);
     }
@@ -27,11 +24,9 @@ class Surface : SurfaceView, SurfaceHolder.Callback,Runnable {
         w= width.toFloat();
         h=height.toFloat();
         game= Game(w,h);
-        //game?.set_brock()
     }
     override fun surfaceCreated(holder: SurfaceHolder) {
-        thread= Thread(this);
-        thread?.start();
+        thread.start();
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
@@ -46,9 +41,12 @@ class Surface : SurfaceView, SurfaceHolder.Callback,Runnable {
 
     override  fun run(){
        while(flag){
-           var canvas:Canvas=holder.lockCanvas();
-           game?.play(canvas);
-           holder.unlockCanvasAndPost(canvas);
+           var canvas:Canvas?=holder.lockCanvas();
+           if(canvas != null) {
+               game?.play(canvas);
+               holder.unlockCanvasAndPost(canvas);
+           }
+
        }
     }
 

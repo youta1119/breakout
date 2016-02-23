@@ -65,13 +65,8 @@ class Game(w:Float,h:Float){
     fun  collision_bar() {
         if ((ball.x > bar.left) && (ball.x < bar.right)) {
             if ((ball.y > bar.top - ball.size) && (ball.y < bar.bottom + ball.size)) {
-                if(ball.x<bar.touchX){
-                    ball.SpeedX = 3;
-                }else{
-                    ball.SpeedX = -3;
-                }
                 ball.SpeedY = -ball.SpeedY;
-
+                ball.SpeedX = -ball.SpeedX;
             }
         }
     }
