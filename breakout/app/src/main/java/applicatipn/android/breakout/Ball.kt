@@ -11,13 +11,17 @@ class Ball(x:Float,y:Float,w:Float,h:Float){
     var y=y;
     val h=h;
     val w=w;
+    var flag=true;
 
     fun move(){
         if(x>=w-size||x<=0){
             SpeedX=-SpeedX;
         }
-        if(y>=h-size||y<=0) {
+        if(y<=0) {
             SpeedY=-SpeedY;
+        }
+        else if(y>=h){
+            flag=false;
         }
         x+=SpeedX;
         y+=SpeedY;
