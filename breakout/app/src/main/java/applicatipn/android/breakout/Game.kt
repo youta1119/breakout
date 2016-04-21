@@ -20,7 +20,7 @@ class Game(w:Float,h:Float){
     }
 
 
-    val ball= Ball(w/2,h/2,w,h);
+    val ball= Ball(w/2,(h-h/5)-100,w,h);
     val bar= Bar(h-h/5);
     var touchX=w/2;
     fun set_brock() {
@@ -45,20 +45,26 @@ class Game(w:Float,h:Float){
 
     fun play(canvas: Canvas){
         val paint =Paint();
-        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
-        ball.move();
-        bar.move(touchX);
-        collision_brock();
-        collision_bar();
-        paint.color = Color.YELLOW;
-        canvas.drawCircle(ball.x,ball.y,ball.size,paint);
-        paint.color = Color.WHITE;
-        canvas.drawRect(bar.left,bar.top,bar.right,bar.bottom,paint);
-        for(i in list){
-            if(i.flag) {
-                paint.color=Color.RED;
-                canvas.drawRect(i.left,i.top, i.right,i.bottom, paint);
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        if(ball.flag) {
+            ball.move();
+            bar.move(touchX);
+            collision_brock();
+            collision_bar();
+            paint.color = Color.YELLOW;
+            canvas.drawCircle(ball.x, ball.y, ball.size, paint);
+            paint.color = Color.WHITE;
+            canvas.drawRect(bar.left, bar.top, bar.right, bar.bottom, paint);
+            for (i in list) {
+                if (i.flag) {
+                    paint.color = Color.RED;
+                    canvas.drawRect(i.left, i.top, i.right, i.bottom, paint);
+                }
             }
+        }else{
+            paint.color=Color.WHITE;
+            paint.textSize=30f;
+            canvas.drawText("GAME OVER!!",w/2,h/2,paint);
         }
 
     }
